@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
 import {faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import { ReuErrorComponent } from './reu-error/reu-error.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ReuErrorComponent } from './reu-error/reu-error.component';
     BrowserModule,
     FontAwesomeModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

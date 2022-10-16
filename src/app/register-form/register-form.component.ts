@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {regExpCheck} from "./validators/reg-exp-check";
+import {comparePasswordsValidator} from "./validators/pwd-compare";
+import {EmailCheckValidator} from "./validators/email-check";
 
 @Component({
   selector: 'app-register-form',
@@ -22,6 +25,7 @@ export class RegisterFormComponent implements OnInit {
     }],
     email: ['', {
       validators: [Validators.required, Validators.email],
+      asyncValidators: this.emailValidator,
       updateOn: 'blur'
     }],
     phone: ['', {
@@ -32,94 +36,48 @@ export class RegisterFormComponent implements OnInit {
       validators: [Validators.required, Validators.maxLength(25), regExpCheck()],
     }],
     confirm: ['', {
-      validators: [Validators.required, Validators.minLength(8), Validators.maxLength(25)],
+      validators: [Validators.required, Validators.maxLength(25)],
       updateOn: 'blur'
     }]
   }, {
     validators: comparePasswordsValidator
   });
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private emailValidator: EmailCheckValidator) {
   }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log(this.registerForm);
+    console.log(this.registerForm.value);
   }
 
-  get firstName(){
+  get firstName() {
     return this.registerForm.get('firstName');
   }
 
-  get lastName(){
+  get lastName() {
     return this.registerForm.get('lastName');
   }
 
-  get age(){
+  get age() {
     return this.registerForm.get('age');
   }
 
-  get email(){
+  get email() {
     return this.registerForm.get('email');
   }
 
-  get phone(){
+  get phone() {
     return this.registerForm.get('phone');
   }
 
-  get password(){
+  get password() {
     return this.registerForm.get('password');
   }
 
-  get confirm(){
+  get confirm() {
     return this.registerForm.get('confirm');
   }
-}
-
-export const comparePasswordsValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  const password = control.get('password');
-  const confirm = control.get('confirm');
-  return password && confirm && password.value !== confirm.value ? {hasToMatch: true} : null;
-};
-
-export function regExpCheck(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-
-    let errors = {
-      has2up: true,
-      hasSymbol: true,
-      has2Digit: true,
-      has3Lo: true,
-      is8Long: true
-    };
-
-    const has2Up: RegExp = new RegExp('[A-Z].*[A-Z]');
-    const res = has2Up.test(control.value);
-    if (res)
-      errors.has2up = false;
-
-    const hasSymbol: RegExp = new RegExp('[!@#$&*]');
-    const res2 = hasSymbol.test(control.value);
-    if (res2)
-      errors.hasSymbol = false;
-
-    const has2Digit: RegExp = new RegExp('[0-9].*[0-9]');
-    const res3 = has2Digit.test(control.value);
-    if (res3)
-      errors.has2Digit = false;
-
-    const has3Lo: RegExp = new RegExp('[a-z].*[a-z].*[a-z]');
-    const res4 = has3Lo.test(control.value);
-    if (res4)
-      errors.has3Lo = false;
-
-    const is8Long: RegExp = new RegExp('.{8}');
-    const res5 = is8Long.test(control.value);
-    if (res5)
-      errors.is8Long = false;
-
-    return errors;
-  };
 }
