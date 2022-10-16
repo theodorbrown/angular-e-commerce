@@ -1,0 +1,184 @@
+<div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-4xl space-y-8">
+    <div>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="overflow-hidden shadow sm:rounded-md">
+          <div class="bg-white px-4 py-5 sm:p-6">
+            <div class="grid grid-cols-6 gap-6">
+
+              <div class="col-span-6 sm:col-span-3">
+                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                <input formControlName="firstName" type="text" name="first-name" id="first-name"
+                       autocomplete="given-name"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+
+                <ng-container
+                  *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)">
+                <span *ngIf="firstName?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 First name is mandatory.
+                </span>
+                  <span *ngIf="firstName?.errors?.['minlength']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The minimum length for this field is {{ firstName?.errors?.['minlength']['requiredLength']}}
+                    , actual length is {{ firstName?.errors?.['minlength']['actualLength']}}.
+                </span>
+                  <span *ngIf="firstName?.errors?.['maxlength']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The maximum length for this field is {{ firstName?.errors?.['maxlength']['requiredLength']}}
+                    , actual length is {{ firstName?.errors?.['maxlength']['actualLength']}}.
+                </span>
+                </ng-container>
+              </div>
+
+
+              <div class="col-span-6 sm:col-span-3">
+                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                <input formControlName="lastName" type="text" name="last-name" id="last-name" autocomplete="family-name"
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)">
+                <span *ngIf="lastName?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 Last name is mandatory.
+                </span>
+                  <span *ngIf="lastName?.errors?.['minlength']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The minimum length for this field is {{ lastName?.errors?.['minlength']['requiredLength']}}
+                    , actual length is {{ lastName?.errors?.['minlength']['actualLength']}}.
+                </span>
+                  <span *ngIf="lastName?.errors?.['maxlength']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The maximum length for this field is {{ lastName?.errors?.['maxlength']['requiredLength']}}
+                    , actual length is {{ lastName?.errors?.['maxlength']['actualLength']}}.
+                </span>
+                </ng-container>
+              </div>
+
+              <div class="col-span-6 sm:col-span-6">
+                <label for="age" class="block text-sm font-medium text-gray-700 sm:w-1/6 w-full">Age</label>
+                <input formControlName="age" type="number" name="age" id="age" autocomplete=""
+                       class="mt-1 block sm:w-1/6  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="age?.invalid && (age?.dirty || age?.touched)">
+                <span *ngIf="age?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 Age is mandatory.
+                </span>
+                  <span *ngIf="age?.errors?.['min']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The minimum age is {{ age?.errors?.['min']['min']}}
+                    , actual is {{ age?.errors?.['min']['actual']}}.
+                </span>
+                  <span *ngIf="age?.errors?.['max']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    The maximum age is {{ age?.errors?.['max']['max']}}
+                    , actual is {{ age?.errors?.['max']['actual']}}.
+                </span>
+                </ng-container>
+              </div>
+
+              <div class="col-span-6 sm:col-span-6">
+                <label for="email-address"
+                       class="block text-sm font-medium text-gray-700 sm:w-1/2  w-full">Email</label>
+                <input formControlName="email" type="text" name="email-address" id="email-address" autocomplete="email"
+                       class="mt-1 block sm:w-1/2  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                <span *ngIf="email?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 Email is mandatory.
+                </span>
+                  <span *ngIf="email?.errors?.['email']"
+                        class="text-sm text-red-500 font-medium "
+                  >
+                    Please provide a valid email.
+                </span>
+                </ng-container>
+              </div>
+
+              <div class="col-span-6 sm:col-span-6">
+                <label for="phone" class="block text-sm font-medium text-gray-700 sm:w-1/3  w-full">Phone number</label>
+                <input formControlName="phone" type="tel" name="phone" id="phone" autocomplete=""
+                       class="mt-1 block sm:w-1/3  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)">
+                <span *ngIf="phone?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 Phone number is mandatory.
+                </span>
+                </ng-container>
+              </div>
+
+              <div class="col-span-6 sm:col-span-3">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input formControlName="password" type="password" name="password" id="password" autocomplete=""
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                <span
+                  *ngIf="password?.errors?.['required']"
+                  class="text-sm text-red-500 font-medium ">
+                  Password is mandatory.
+                </span>
+                  <span
+                    *ngIf="password?.errors?.['maxlength']"
+                    class="text-sm text-red-500 font-medium ">
+                    The maximum length for this field is {{ password?.errors?.['maxlength']['requiredLength']}}
+                    , actual length is {{ password?.errors?.['maxlength']['actualLength']}}.
+                </span>
+                  <span class="text-sm text-red-500 font-medium "
+                        *ngIf="registerForm.errors?.['hasToMatch'] && password?.dirty && confirm?.dirty">
+              Passwords are not matching.
+            </span>
+                </ng-container>
+                <app-reu-error [hasError]="password?.hasError('has2up')"
+                               [text]="'Contains two uppercase'"></app-reu-error>
+                <app-reu-error [hasError]="password?.hasError('hasSymbol')"
+                               [text]="'Contains a symbol'"></app-reu-error>
+                <app-reu-error [hasError]="password?.hasError('has2Digit')"
+                               [text]="'Contains two digits'"></app-reu-error>
+                <app-reu-error [hasError]="password?.hasError('has3Lo')"
+                               [text]="'Contains three lowercase'"></app-reu-error>
+                <app-reu-error [hasError]="password?.hasError('is8Long')"
+                               [text]="'Contains eight characters'"></app-reu-error>
+              </div>
+              <div class="col-span-6 sm:col-span-3">
+                <label for="confirm" class="block text-sm font-medium text-gray-700">Confirm password</label>
+                <input formControlName="confirm" type="password" name="confirm" id="confirm" autocomplete=""
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                <ng-container
+                  *ngIf="confirm?.invalid && (confirm?.dirty || confirm?.touched)">
+                <span *ngIf="confirm?.errors?.['required']"
+                      class="text-sm text-red-500 font-medium "
+                >
+                 Confirm password is mandatory.
+                </span>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+            <button type="submit"
+                    [disabled]="!registerForm.valid"
+                    [ngClass]="{'bg-indigo-600 hover:bg-indigo-700': registerForm.valid, 'bg-gray-300': !registerForm.valid}"
+                    class="inline-flex justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ">
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div>
+  <span
+    *ngIf="hasError;else other_content"
+    class="text-red-500 text-sm font-medium">
+  <fa-icon icon="xmark-circle"></fa-icon> {{ text }}
+  </span>
+  <ng-template #other_content>
+    <span class="text-green-500 text-sm font-medium">
+      <fa-icon icon="xmark-circle"></fa-icon> {{ text }}
+    </span>
+  </ng-template>
+</div>
