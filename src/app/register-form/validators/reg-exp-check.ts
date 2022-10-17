@@ -1,7 +1,6 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
 
-export function regExpCheck(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
+export const regExpCheck: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     interface Err {
       has2up?: boolean,
       hasSymbol?: boolean,
@@ -44,5 +43,4 @@ export function regExpCheck(): ValidatorFn {
       delete errors.is8Long;
 
     return errors;
-  };
 }

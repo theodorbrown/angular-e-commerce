@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {regExpCheck} from "./validators/reg-exp-check";
 import {comparePasswordsValidator} from "./validators/pwd-compare";
 import {EmailCheckValidator} from "./validators/email-check";
@@ -25,15 +25,15 @@ export class RegisterFormComponent implements OnInit {
     }],
     email: ['', {
       validators: [Validators.required, Validators.email],
-      asyncValidators: this.emailValidator,
+      asyncValidators: [this.emailValidator],
       updateOn: 'blur'
     }],
     phone: ['', {
-      validators: Validators.required,
+      validators: [Validators.required],
       updateOn: 'blur'
     }],
     password: ['', {
-      validators: [Validators.required, Validators.maxLength(25), regExpCheck()],
+      validators: [Validators.required, Validators.maxLength(25), regExpCheck],
     }],
     confirm: ['', {
       validators: [Validators.required, Validators.maxLength(25)],
@@ -43,6 +43,20 @@ export class RegisterFormComponent implements OnInit {
     validators: comparePasswordsValidator
   });
 
+  select: boolean = false;
+
+  codesArray = [
+    {country: 'FR', code: 33, minlength: 9, maxlength: 9},
+    {country: 'DE', code: 49, minlength: 3, maxlength: 12},
+    {country: 'BE', code: 32, minlength: 8, maxlength: 10},
+    {country: 'LU', code: 352, minlength: 4, maxlength: 12},
+    {country: 'AT', code: 43, minlength: 4, maxlength: 13},
+  ];
+
+  optionValue: string = this.codesArray[0].country;
+  phoneMaxLength: number = 0;
+  phoneMinLength: number = 0;
+
   constructor(private fb: FormBuilder, private emailValidator: EmailCheckValidator) {
   }
 
@@ -50,7 +64,10 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    console.log({
+      ...this.registerForm.value,
+      phone: '+' + this.findObject() + this.phone?.value
+    });
   }
 
   get firstName() {
@@ -79,5 +96,12 @@ export class RegisterFormComponent implements OnInit {
 
   get confirm() {
     return this.registerForm.get('confirm');
+  }
+
+  findObject(){
+    const object = this.codesArray.find(element => element.country === this.optionValue);
+    this.phoneMaxLength = object!.maxlength;
+    this.phoneMinLength = object!.minlength;
+    return object!.code;
   }
 }
