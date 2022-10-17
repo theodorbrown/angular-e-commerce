@@ -8,22 +8,32 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import {faCheck, faChevronDown, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import { ReuErrorComponent } from './reu-error/reu-error.component';
 import {HttpClientModule} from "@angular/common/http";
+import { LoginFormComponent } from './login-form/login-form.component';
+import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterFormComponent,
-    ReuErrorComponent
+    ReuErrorComponent,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,
     FontAwesomeModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: "6Lff64oiAAAAAIBc93u3BZOBim7IlFvx2_IxQRGG" } as RecaptchaSettings,
+    },
+  ],
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
