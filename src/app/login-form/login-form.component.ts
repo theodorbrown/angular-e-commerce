@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-form',
@@ -7,7 +9,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 })
 export class LoginFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
   }
 
   loginForm = this.fb.group({
@@ -16,11 +18,27 @@ export class LoginFormComponent implements OnInit {
     recaptcha: [null, [Validators.required]]
   })
 
+  loginError = '';
+
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    this.loginError = '';
+    this.authService.login({
+      email: this.email?.value,
+      password: this.password?.value
+    }).subscribe({
+      next: _ => {
+        this.router.navigate(['']);
+      },
+      error: err => {
+        if (err.info)
+          this.loginError = err.info;
+        if (err.lockUntilInfo && err.loginAttemptsInfo)
+          this.loginError = 'Account locked until: ' + new Date(err.lockUntilInfo).toLocaleTimeString('fr-FR') + '. Number of attempts: ' + err.loginAttemptsInfo + '. Maximum attempts allowed are 5.';
+      }
+    })
   }
 
   get email() {
@@ -36,5 +54,4 @@ export class LoginFormComponent implements OnInit {
   }
 }
 
-//TODO : find a way to handle errors better
-//TODO : Guards and refresh on connect ?
+//TODO : Interceptor -> put token in it for each req to server :)

@@ -2,7 +2,7 @@
   <div class="w-full max-w-md space-y-2">
     <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
          alt="Company logo">
-    <h2 class="text-center text-3xl font-bold tracking-tight text-gray-900">Log in</h2>
+    <h2 class="text-center text-3xl font-bold tracking-tight text-gray-900">Sign in</h2>
     <div>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="overflow-hidden shadow sm:rounded-md">
@@ -29,6 +29,11 @@
                   <span *ngIf="password?.hasError('required')" class="text-sm text-red-500 font-medium">
                     Password is required.
                   </span>
+                </ng-container>
+                <ng-container *ngIf="loginError">
+                  <p class="text-sm text-red-500 font-medium">
+                    {{loginError}}
+                  </p>
                 </ng-container>
               </div>
               <div class="flex justify-center">
