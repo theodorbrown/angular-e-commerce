@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GlobalConstants} from "../constants/global-constants";
-import {BehaviorSubject, tap} from "rxjs";
+import {BehaviorSubject, map, Observable, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,10 @@ export class AuthService {
 
   private setSession(authResult: Token){
     localStorage.setItem('access_token', authResult.access_token);
+  }
+
+  getProfile(): Observable<any>{
+    return this.http.get<any>(GlobalConstants.API_URL + 'auth/profile')
   }
 }
 

@@ -8,7 +8,8 @@ import {HomePageComponent} from "./home-page/home-page.component";
 const routes: Routes = [
   {path: 'signup', component: RegisterFormComponent, title: 'Sign up', canActivate: [IsLoggedInGuard]},
   {path: 'signin', component: LoginFormComponent, title: 'Sign in', canActivate: [IsLoggedInGuard]},
-  {path: '', component: HomePageComponent, title: 'Home page', canActivate: []}
+  {path: '', component: HomePageComponent, title: 'Home page', canActivate: []},
+  {path: '**', redirectTo:''}
 ];
 
 @NgModule({

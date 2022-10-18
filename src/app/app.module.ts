@@ -5,13 +5,14 @@ import {AppComponent} from './app.component';
 import {RegisterFormComponent} from './register-form/register-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FontAwesomeModule, FaIconLibrary} from '@fortawesome/angular-fontawesome'
-import {faCheck, faChevronDown, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {faCartShopping, faCheck, faChevronDown, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import {ReuErrorComponent} from './reu-error/reu-error.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginFormComponent} from './login-form/login-form.component';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 import {ErrorInterceptor} from "./interceptors/error.interceptor";
 import { HomePageComponent } from './home-page/home-page.component';
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -40,12 +41,17 @@ import { HomePageComponent } from './home-page/home-page.component';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
   ],
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add icons to the library for convenient access in other components
-    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck);
+    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck, faCartShopping);
   }
 }
