@@ -7,12 +7,11 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {FontAwesomeModule, FaIconLibrary} from '@fortawesome/angular-fontawesome'
 import {faCartShopping, faCheck, faChevronDown, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
 import {ReuErrorComponent} from './reu-error/reu-error.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {LoginFormComponent} from './login-form/login-form.component';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
-import {ErrorInterceptor} from "./interceptors/error.interceptor";
-import { HomePageComponent } from './home-page/home-page.component';
-import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {HomePageComponent} from './home-page/home-page.component';
+import {httpInterceptorProviders} from "./interceptors/http-request.interceptor";
 
 @NgModule({
   declarations: [
@@ -37,16 +36,7 @@ import {AuthInterceptor} from "./interceptors/auth.interceptor";
       provide: RECAPTCHA_SETTINGS,
       useValue: {siteKey: "6Lff64oiAAAAAIBc93u3BZOBim7IlFvx2_IxQRGG"} as RecaptchaSettings,
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
+    httpInterceptorProviders
   ],
 })
 export class AppModule {

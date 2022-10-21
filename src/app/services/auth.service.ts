@@ -1,48 +1,36 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GlobalConstants} from "../constants/global-constants";
-import {BehaviorSubject, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loginStatus = new BehaviorSubject(this.isLoggedIn());
+  private loginStatus = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(payload: any) {
+    //no token needed
     return this.http.post(GlobalConstants.API_URL + 'auth/login', payload).pipe(
       tap(res => {
-        this.setSession(res as Token);
         this.loginStatus.next(true);
       })
     )
+    //will return access token and refresh token in cookie (success true)
   }
 
-  private isLoggedIn(): boolean{
-    return !!localStorage.getItem('access_token');
-  }
-
-  get getLoginStatus(){
-    return this.loginStatus.asObservable();
+  refresh(){
+    //refresh token needed in header cookie
+    return this.http.post(GlobalConstants.API_URL + 'auth/refresh', {})
+    //will return new access token and refresh token in cookie (success true)
   }
 
   logout(){
-    localStorage.removeItem('access_token');
-    this.loginStatus.next(false);
+    //auth token needed in header cookie
+    return this.http.post(GlobalConstants.API_URL + 'auth/logout', {})
+    //will return success true
   }
-
-  private setSession(authResult: Token){
-    localStorage.setItem('access_token', authResult.access_token);
-  }
-
-  getProfile(): Observable<any>{
-    return this.http.get<any>(GlobalConstants.API_URL + 'auth/profile')
-  }
-}
-
-export interface Token {
-  access_token: string;
 }
