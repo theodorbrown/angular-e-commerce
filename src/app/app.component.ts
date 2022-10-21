@@ -12,10 +12,7 @@ export class AppComponent {
   popUp = true;
   menu = true
 
- // loginStatus$ = this.authService.getLoginStatus;
- // userProfile$ = this.authService.getProfile();
-
-  userProfile: false | { firstName: string, profileImage: string } = false;
+  loginStatus$ = this.authService.loginStatus;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -29,8 +26,12 @@ export class AppComponent {
   }*/
 
   logout() {
-    this.authService.logout().subscribe();
-    this.router.navigate(['']);
+    this.authService.logout().subscribe({
+      complete: () => {
+        //delete cookie :D in back-end
+        this.router.navigate(['']);
+      }
+    });
   }
 
 }

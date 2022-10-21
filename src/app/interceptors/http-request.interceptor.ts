@@ -8,13 +8,14 @@ import {
 } from '@angular/common/http';
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
 
   private isRefreshing = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -35,8 +36,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      //TODO: if user logged in
-      if (true) {
+      //if user connected
+      if (this.authService.markUp()) {
         return this.authService.refresh().pipe(
           switchMap(() => {
             this.isRefreshing = false;
@@ -45,13 +46,15 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           catchError((error) => {
             this.isRefreshing = false;
             if (error.status == '403') {
-              //for example refresh not matching
-              //TODO: send event
-              //this.eventBusService.emit(new EventData('logout', null));
+              //for example refresh legit but not matching hash?
+              console.log('no match')
             }
             return throwError(() => error);
           })
         );
+      } else {
+        this.authService.ls.next(false);
+        this.router.navigate(['/signin']);
       }
     }
     return next.handle(request);
