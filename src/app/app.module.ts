@@ -5,7 +5,14 @@ import {AppComponent} from './app.component';
 import {RegisterFormComponent} from './register-form/register-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FontAwesomeModule, FaIconLibrary} from '@fortawesome/angular-fontawesome'
-import {faCartShopping, faCheck, faChevronDown, faCircleCheck, faCircleXmark} from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleDown,
+  faCartShopping,
+  faCheck,
+  faChevronDown,
+  faCircleCheck,
+  faCircleXmark
+} from "@fortawesome/free-solid-svg-icons";
 import {ReuErrorComponent} from './reu-error/reu-error.component';
 import {HttpClientModule} from "@angular/common/http";
 import {LoginFormComponent} from './login-form/login-form.component';
@@ -42,6 +49,6 @@ import {httpInterceptorProviders} from "./interceptors/http-request.interceptor"
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add icons to the library for convenient access in other components
-    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck, faCartShopping);
+    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck, faCartShopping, faAngleDown);
   }
 }

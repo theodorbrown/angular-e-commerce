@@ -37,6 +37,8 @@ export class LoginFormComponent implements OnInit {
           this.loginError = err.info;
         if (err.lockUntilInfo && err.loginAttemptsInfo)
           this.loginError = 'Account locked until: ' + new Date(err.lockUntilInfo).toLocaleTimeString('fr-FR') + '. Number of attempts: ' + err.loginAttemptsInfo + '. Maximum attempts allowed are 5.';
+        if(err.server)
+          this.loginError = err.server;
       }
     })
   }
@@ -53,5 +55,3 @@ export class LoginFormComponent implements OnInit {
     return this.loginForm.get('recaptcha');
   }
 }
-
-//TODO : Interceptor -> put token in it for each req to server :)

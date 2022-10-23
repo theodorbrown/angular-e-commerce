@@ -26,9 +26,18 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error) => {
-        if(error instanceof HttpErrorResponse && error.status === 401)
+        //Server not reached
+        if (error instanceof HttpErrorResponse && error.status === 0) {
+          return throwError(() => {
+            return {
+              server: 'Serveur injoignable : réessayer plus tard'
+            }
+          });
+        }
+        //UnauthorizedException === 401
+        if (error instanceof HttpErrorResponse && error.status === 401)
           return this.handle401Error(request, next);
-        return throwError(() => error);
+        return throwError(() => error.error);
       })
     );
   }
@@ -46,8 +55,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           catchError((error) => {
             this.isRefreshing = false;
             if (error.status == '403') {
-              //for example refresh legit but not matching hash?
-              console.log('no match')
+              //for example refresh legit but not matching hash
+              this.authService.ls.next(false);
+              this.router.navigate(['/signin']);
             }
             return throwError(() => error);
           })
@@ -62,5 +72,5 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 }
 
 export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+  {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true},
 ];

@@ -49,37 +49,60 @@
             </div>
           </div>
         </div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-3">
+        <div
+          class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 space-x-3">
           <span
-            *ngIf="(loginStatus$ | async)"
+            *ngIf="isLoggedIn"
             class="bg-gray-800 p-1 text-gray-400">
-            Hello
+            Hello user
           </span>
+
+          <div class="relative ml-3">
+            <div>
+              <button *ngIf="!isLoggedIn"
+                      (click)="signIn=!signIn"
+                      (mouseenter)="signIn=false;popUp=true" type="button">
+              <span
+                class="bg-gray-800 p-1 text-gray-400">
+                Hello, sign in <fa-icon icon="angle-down"></fa-icon>
+              </span>
+              </button>
+            </div>
+            <div [ngClass]="{'hidden': signIn}"
+                 (mouseleave)="signIn=true"
+                 class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+              <div class="text-center">
+                <button routerLink="signin"
+                        class="bg-amber-400 rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-1 focus:ring-amber-500 focus:ring-offset-1 ">
+                  Sign in
+                </button>
+                <p class="mt-2 text-sm text-gray-700">New client? <a class="text-amber-500" routerLink="signup">Sign
+                  up</a></p>
+              </div>
+            </div>
+          </div>
 
           <!-- Profile dropdown -->
           <div class="relative ml-3">
             <div>
               <button (click)="popUp=!popUp"
-                      (mouseenter)="popUp=false" type="button"
+                      (mouseenter)="popUp=false;signIn=true" type="button"
                       class="flex rounded-full bg-gray-800 text-sm hover:outline-none hover:ring-2 hover:ring-white hover:ring-offset-2 hover:ring-offset-gray-800"
                       id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="sr-only">Open user menu</span>
-                <img class="h-8 w-8 rounded-full"
-                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                     alt="">
+                <ng-container *ngIf="userThumbnail;else defaultThumbnail">
+                  <img [src]="userThumbnail" class="h-8 w-8 rounded-full">
+                </ng-container>
+                <ng-template #defaultThumbnail>
+                  <img src="assets/images/user-default.jpg" class="h-8 w-8 rounded-full">
+                </ng-template>
               </button>
             </div>
-
             <div [ngClass]="{'hidden': popUp}"
                  (mouseleave)="popUp=true"
                  class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                  role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-              <a *ngIf="!(loginStatus$ | async)" href="#"
-                 routerLink="signin"
-                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                 role="menuitem" tabindex="-1">
-                Sign in
-              </a>
               <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1">
                 Account & Lists
               </a>
@@ -88,7 +111,7 @@
               </a>
               <a
                 (click)="logout()"
-                *ngIf="(loginStatus$ | async)"
+                *ngIf="isLoggedIn"
                 routerLink=""
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                 role="menuitem" tabindex="-1">
