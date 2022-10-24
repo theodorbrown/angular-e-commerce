@@ -1,27 +1,48 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GlobalConstants} from "../constants/global-constants";
-import {BehaviorSubject, tap} from "rxjs";
+import {
+  BehaviorSubject,
+  catchError,
+  concatMap, EMPTY, empty, finalize,
+  first, interval,
+  lastValueFrom,
+  map,
+  of,
+  switchMap,
+  take, takeUntil,
+  tap,
+  timeout
+} from "rxjs";
+import {fromPromise} from "rxjs/internal/observable/innerFrom";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  ls = new BehaviorSubject(this.markUp());
+  ls = new BehaviorSubject<boolean>(this.getLoginStatus());
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
+  }
+
+  //TODO : type
+  register(payload: any) {
+    //no token needed
+    return this.http.post(GlobalConstants.API_URL + 'auth/register', payload);
+    //will return the new user
   }
 
   login(payload: any) {
     //no token needed
     return this.http.post(GlobalConstants.API_URL + 'auth/login', payload).pipe(
-      tap(res => {
-        localStorage.setItem('connected', 'true');
-        this.ls.next(true);
+      tap(_ => {
+        this.addToLocalStorage();
+        this.router.navigate(['/']);
       })
     )
-    //will return access token and refresh token in cookie (success true)
+    //will return access token and refresh token in cookie and user
   }
 
   refresh() {
@@ -34,18 +55,25 @@ export class AuthService {
     //auth token needed in header cookie
     return this.http.post(GlobalConstants.API_URL + 'auth/logout', {}).pipe(
       tap(res => {
-        localStorage.removeItem('connected')
-        this.ls.next(false);
+        //+ back-end API removes cookie from client (HttpOnly)
+        this.removeFromLocalStorage();
+        this.router.navigate(['/signin']);
       })
     )
     //will return success true
   }
 
-  get loginStatus() {
-    return this.ls.asObservable();
+  addToLocalStorage(){
+    localStorage.setItem('connected','true');
+    this.ls.next(true);
   }
 
-  markUp(){
+  removeFromLocalStorage(){
+    localStorage.removeItem('connected');
+    this.ls.next(false);
+  }
+
+  getLoginStatus(): boolean {
     return !!localStorage.getItem('connected');
   }
 }

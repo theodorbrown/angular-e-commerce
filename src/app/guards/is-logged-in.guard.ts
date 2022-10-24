@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CanActivate} from '@angular/router';
+import {AuthService} from "../services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IsLoggedInGuard implements CanActivate {
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    //TODO: maybe call the refresh route -> if I need can activate I should be connected
-    return true;
+  canActivate(): boolean {
+    return !this.authService.getLoginStatus();
   }
 
 }

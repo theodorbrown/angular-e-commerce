@@ -3,6 +3,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {regExpCheck} from "./validators/reg-exp-check";
 import {comparePasswordsValidator} from "./validators/pwd-compare";
 import {EmailCheckValidator} from "./validators/email-check";
+import {AuthService} from "../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register-form',
@@ -57,17 +59,26 @@ export class RegisterFormComponent implements OnInit {
   phoneMaxLength: number = 0;
   phoneMinLength: number = 0;
 
-  constructor(private fb: FormBuilder, private emailValidator: EmailCheckValidator) {
+  constructor(
+    private fb: FormBuilder,
+    private emailValidator: EmailCheckValidator,
+    private authService: AuthService,
+    private router: Router
+  ) {
   }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    console.log({
+    const payload = {
       ...this.registerForm.value,
       phone: '+' + this.findObject() + this.phone?.value
-    });
+    }
+    this.authService.register(payload).subscribe(value => {
+      this.router.navigate(['signin']);
+      }
+    )
   }
 
   get firstName() {
@@ -98,7 +109,7 @@ export class RegisterFormComponent implements OnInit {
     return this.registerForm.get('confirm');
   }
 
-  findObject(){
+  findObject() {
     const object = this.codesArray.find(element => element.country === this.optionValue);
     this.phoneMaxLength = object!.maxlength;
     this.phoneMinLength = object!.minlength;

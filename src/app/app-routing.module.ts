@@ -6,10 +6,11 @@ import {IsLoggedInGuard} from "./guards/is-logged-in.guard";
 import {HomePageComponent} from "./home-page/home-page.component";
 
 const routes: Routes = [
-  {path: '', component: HomePageComponent, title: 'Welcome Page'},
-  {path: 'signup', component: RegisterFormComponent, title: 'Sign up', canActivate: [IsLoggedInGuard]},
-  {path: 'signin', component: LoginFormComponent, title: 'Sign in', canActivate: [IsLoggedInGuard]}
-]
+    {path: '', component: HomePageComponent, title: 'Welcome Page'},
+    {path: 'signup', component: RegisterFormComponent, title: 'Sign up', canActivate: [IsLoggedInGuard]},
+    {path: 'signin', component: LoginFormComponent, title: 'Sign in', canActivate: [IsLoggedInGuard]},
+    {path: '**', redirectTo: ''}
+  ]
 ;
 
 @NgModule({
