@@ -11,7 +11,7 @@ import {
   faCheck,
   faChevronDown,
   faCircleCheck,
-  faCircleXmark
+  faCircleXmark, faPaperclip
 } from "@fortawesome/free-solid-svg-icons";
 import {ReuErrorComponent} from './reu-error/reu-error.component';
 import {HttpClientModule} from "@angular/common/http";
@@ -19,6 +19,9 @@ import {LoginFormComponent} from './login-form/login-form.component';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 import {HomePageComponent} from './home-page/home-page.component';
 import {httpInterceptorProviders} from "./interceptors/http-request.interceptor";
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { ToggleProfileInfoComponent } from './toggle-profile-info/toggle-profile-info.component';
+import { PhoneWidgetComponent } from './phone-widget/phone-widget.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import {httpInterceptorProviders} from "./interceptors/http-request.interceptor"
     RegisterFormComponent,
     ReuErrorComponent,
     LoginFormComponent,
-    HomePageComponent
+    HomePageComponent,
+    ProfilePageComponent,
+    ToggleProfileInfoComponent,
+    PhoneWidgetComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +55,6 @@ import {httpInterceptorProviders} from "./interceptors/http-request.interceptor"
 export class AppModule {
   constructor(library: FaIconLibrary) {
     // Add icons to the library for convenient access in other components
-    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck, faCartShopping, faAngleDown);
+    library.addIcons(faCircleCheck, faCircleXmark, faChevronDown, faCheck, faCartShopping, faAngleDown, faPaperclip);
   }
 }

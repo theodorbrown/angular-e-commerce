@@ -4,7 +4,7 @@ import {regExpCheck} from "./validators/reg-exp-check";
 import {comparePasswordsValidator} from "./validators/pwd-compare";
 import {EmailCheckValidator} from "./validators/email-check";
 import {AuthService} from "../services/auth.service";
-import {Router} from "@angular/router";
+import {CreateUser} from "../types";
 
 @Component({
   selector: 'app-register-form',
@@ -31,7 +31,7 @@ export class RegisterFormComponent implements OnInit {
       updateOn: 'blur'
     }],
     phone: ['', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.pattern('[0-9]+')],
       updateOn: 'blur'
     }],
     password: ['', {
@@ -45,25 +45,12 @@ export class RegisterFormComponent implements OnInit {
     validators: comparePasswordsValidator
   });
 
-  select: boolean = false;
-
-  codesArray = [
-    {country: 'FR', code: 33, minlength: 9, maxlength: 9},
-    {country: 'DE', code: 49, minlength: 3, maxlength: 12},
-    {country: 'BE', code: 32, minlength: 8, maxlength: 10},
-    {country: 'LU', code: 352, minlength: 4, maxlength: 12},
-    {country: 'AT', code: 43, minlength: 4, maxlength: 13},
-  ];
-
-  optionValue: string = this.codesArray[0].country;
-  phoneMaxLength: number = 0;
-  phoneMinLength: number = 0;
+  phoneDetails: any;
 
   constructor(
     private fb: FormBuilder,
     private emailValidator: EmailCheckValidator,
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
   }
 
@@ -71,14 +58,13 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const payload = {
-      ...this.registerForm.value,
-      phone: '+' + this.findObject() + this.phone?.value
+    const formValues = this.registerForm.value as unknown as CreateUser;
+    const payload: CreateUser = {
+      ...formValues,
+     phone: this.phoneDetails.country + '+' + this.phoneDetails.code + this.phone!.value
     }
-    this.authService.register(payload).subscribe(value => {
-      this.router.navigate(['signin']);
-      }
-    )
+
+    this.authService.register(payload).subscribe();
   }
 
   get firstName() {
@@ -109,10 +95,9 @@ export class RegisterFormComponent implements OnInit {
     return this.registerForm.get('confirm');
   }
 
-  findObject() {
-    const object = this.codesArray.find(element => element.country === this.optionValue);
-    this.phoneMaxLength = object!.maxlength;
-    this.phoneMinLength = object!.minlength;
-    return object!.code;
+  handlePhoneDetails($event: any) {
+    this.phoneDetails = {
+      ...$event
+    }
   }
 }

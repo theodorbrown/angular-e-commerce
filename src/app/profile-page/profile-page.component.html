@@ -1,0 +1,162 @@
+<div class="overflow-hidden bg-white shadow sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6 bg-indigo-100">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Profile Information</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details.</p>
+  </div>
+  <div class="border-t border-gray-200">
+    <form [formGroup]="profileForm">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">First name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'firstName'"></app-toggle-profile-info>
+            <ng-container *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)">
+                  <span *ngIf="firstName?.errors?.['required']" class="text-sm text-red-500 font-medium">
+                    First name is mandatory.
+                  </span>
+              <span *ngIf="firstName?.errors?.['minlength']" class="text-sm text-red-500 font-medium">
+                    The minimum length for this field is {{ firstName?.errors?.['minlength']['requiredLength']}},
+                    actual length is {{ firstName?.errors?.['minlength']['actualLength']}}.
+                  </span>
+              <span *ngIf="firstName?.errors?.['maxlength']" class="text-sm text-red-500 font-medium">
+                    The maximum length for this field is {{ firstName?.errors?.['maxlength']['requiredLength']}},
+                    actual length is {{ firstName?.errors?.['maxlength']['actualLength']}}.
+                  </span>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Last name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'lastName'"></app-toggle-profile-info>
+            <ng-container *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)">
+                  <span *ngIf="lastName?.errors?.['required']" class="text-sm text-red-500 font-medium">
+                    Last name is mandatory.
+                  </span>
+              <span *ngIf="lastName?.errors?.['minlength']" class="text-sm text-red-500 font-medium">
+                    The minimum length for this field is {{ lastName?.errors?.['minlength']['requiredLength']}},
+                    actual length is {{ lastName?.errors?.['minlength']['actualLength']}}.
+                  </span>
+              <span *ngIf="lastName?.errors?.['maxlength']" class="text-sm text-red-500 font-medium">
+                    The maximum length for this field is {{ lastName?.errors?.['maxlength']['requiredLength']}},
+                    actual length is {{ lastName?.errors?.['maxlength']['actualLength']}}.
+                  </span>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Email</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'email'"></app-toggle-profile-info>
+            <ng-container *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+                  <span *ngIf="email?.errors?.['required']" class="text-sm text-red-500 font-medium">
+                    Email is mandatory.
+                  </span>
+              <span *ngIf="email?.errors?.['email']" class="text-sm text-red-500 font-medium">
+                    Please provide a valid email.
+                  </span>
+              <span *ngIf="email?.errors?.['emailExist']" class="text-sm text-red-500 font-medium">
+                    This email already exists.
+                  </span>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Password</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'password'"></app-toggle-profile-info>
+            <ng-container *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                  <span *ngIf="password?.errors?.['required']" class="text-sm text-red-500 font-medium ">
+                    Password is mandatory.
+                  </span>
+              <span *ngIf="password?.errors?.['maxlength']" class="text-sm text-red-500 font-medium ">
+                    The maximum length for this field is {{ password?.errors?.['maxlength']['requiredLength']}},
+                    actual length is {{ password?.errors?.['maxlength']['actualLength']}}.
+              </span>
+              <app-reu-error [hasError]="password?.hasError('has2up')"
+                             [text]="'Two uppercase'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('hasSymbol')"
+                             [text]="'A symbol'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('has2Digit')"
+                             [text]="'Two digits'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('has3Lo')"
+                             [text]="'Three lowercase'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('is8Long')"
+                             [text]="'Eight characters'"></app-reu-error>
+            </ng-container>
+            <ng-container *ngIf="confirm?.invalid && (confirm?.dirty || confirm?.touched)">
+                  <span *ngIf="confirm?.errors?.['required']" class="text-sm text-red-500 font-medium">
+                    Confirm password is mandatory.
+                  </span>
+            </ng-container>
+            <span
+              class="text-sm text-red-500 font-medium "
+              *ngIf="profileForm.errors?.['hasToMatch'] && confirm?.dirty">
+                  Passwords are not matching.
+            </span>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Phone</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'phone'"></app-toggle-profile-info>
+          </dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Age</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <app-toggle-profile-info [form]="profileForm" [prop]="'age'"></app-toggle-profile-info>
+            <ng-container *ngIf="age?.invalid && (age?.dirty || age?.touched)">
+                  <span *ngIf="age?.errors?.['required']" class="text-sm text-red-500 font-medium">
+                    Age is mandatory.
+                  </span>
+              <span *ngIf="age?.errors?.['min']" class="text-sm text-red-500 font-medium">
+                    The minimum age is {{ age?.errors?.['min']['min']}}, actual is {{ age?.errors?.['min']['actual']}}.
+                  </span>
+              <span *ngIf="age?.errors?.['max']" class="text-sm text-red-500 font-medium">
+                    The maximum age is {{ age?.errors?.['max']['max']}}, actual is {{ age?.errors?.['max']['actual']}}.
+                  </span>
+            </ng-container>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Plus member</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">No subscription</dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Profile picture</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            <div class="divide-y divide-gray-200 rounded-md border border-gray-200">
+              <div class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                <div class="text-sm mr-5">
+                  <span>Current file:</span>
+                </div>
+                <div class="flex w-0 flex-1 items-center">
+                  <fa-icon icon="paperclip"></fa-icon>
+                  <span class="ml-2 w-0 flex-1 truncate">{{profileForm.get('profileImage')!.value}}</span>
+                </div>
+              </div>
+              <form enctype="multipart/form-data" class="py-3 pl-3 pr-4 text-sm sm:flex sm:justify-between text-center">
+                <div>
+                  <input #file type="file" name="file" required>
+                </div>
+                <div class="mt-5 sm:mt-0">
+                  <a
+                    (click)="upload(file)"
+                    class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">Download & Save</a>
+                </div>
+              </form>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </form>
+  </div>
+  <!--Part 2-->
+  <div class="px-4 py-5 sm:px-6 border-t bg-indigo-100">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Addresses</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">List of addresses.</p>
+  </div>
+  <div class="border-t border-gray-200">
+  </div>
+</div>

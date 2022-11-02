@@ -27,8 +27,8 @@ export class LoginFormComponent implements OnInit {
     this.loginError = '';
 
     this.authService.login({
-      email: this.email?.value,
-      password: this.password?.value
+      email: this.email!.value!,
+      password: this.password!.value!
     }).subscribe({
       error: err => {
         if (err.info)

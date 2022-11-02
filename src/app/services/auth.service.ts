@@ -1,21 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GlobalConstants} from "../constants/global-constants";
-import {
-  BehaviorSubject,
-  catchError,
-  concatMap, EMPTY, empty, finalize,
-  first, interval,
-  lastValueFrom,
-  map,
-  of,
-  switchMap,
-  take, takeUntil,
-  tap,
-  timeout
-} from "rxjs";
-import {fromPromise} from "rxjs/internal/observable/innerFrom";
+import {BehaviorSubject, tap,} from "rxjs";
 import {Router} from "@angular/router";
+import {CreateUser, LoginUser} from "../types";
 
 @Injectable({
   providedIn: 'root'
@@ -28,15 +16,19 @@ export class AuthService {
   }
 
   //TODO : type
-  register(payload: any) {
+  register(payload: CreateUser) {
     //no token needed
-    return this.http.post(GlobalConstants.API_URL + 'auth/register', payload);
+    return this.http.post<CreateUser>(GlobalConstants.API_URL + 'auth/register', payload).pipe(
+      tap(_ => {
+        this.router.navigate(['/signin']);
+      })
+    )
     //will return the new user
   }
 
-  login(payload: any) {
+  login(payload: LoginUser) {
     //no token needed
-    return this.http.post(GlobalConstants.API_URL + 'auth/login', payload).pipe(
+    return this.http.post<LoginUser>(GlobalConstants.API_URL + 'auth/login', payload).pipe(
       tap(_ => {
         this.addToLocalStorage();
         this.router.navigate(['/']);
