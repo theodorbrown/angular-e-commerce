@@ -9,99 +9,35 @@
           <div class="bg-white px-4 py-5 sm:p-6">
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-3">
-                <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-                <input formControlName="firstName" type="text" id="first-name"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)">
-                  <span *ngIf="firstName?.errors?.['required']" class="text-sm text-red-500 font-medium">
-                    First name is mandatory.
-                  </span>
-                  <span *ngIf="firstName?.errors?.['minlength']" class="text-sm text-red-500 font-medium">
-                    The minimum length for this field is {{ firstName?.errors?.['minlength']['requiredLength']}},
-                    actual length is {{ firstName?.errors?.['minlength']['actualLength']}}.
-                  </span>
-                  <span *ngIf="firstName?.errors?.['maxlength']" class="text-sm text-red-500 font-medium">
-                    The maximum length for this field is {{ firstName?.errors?.['maxlength']['requiredLength']}},
-                    actual length is {{ firstName?.errors?.['maxlength']['actualLength']}}.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="text" label="First name" fieldName="firstName"
+                           formControlName="firstName" classes="w-full"></app-input>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-                <input formControlName="lastName" type="text" id="last-name"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)">
-                  <span *ngIf="lastName?.errors?.['required']" class="text-sm text-red-500 font-medium">
-                    Last name is mandatory.
-                  </span>
-                  <span *ngIf="lastName?.errors?.['minlength']" class="text-sm text-red-500 font-medium">
-                    The minimum length for this field is {{ lastName?.errors?.['minlength']['requiredLength']}},
-                    actual length is {{ lastName?.errors?.['minlength']['actualLength']}}.
-                  </span>
-                  <span *ngIf="lastName?.errors?.['maxlength']" class="text-sm text-red-500 font-medium">
-                    The maximum length for this field is {{ lastName?.errors?.['maxlength']['requiredLength']}},
-                    actual length is {{ lastName?.errors?.['maxlength']['actualLength']}}.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="text" label="Last name" fieldName="lastName"
+                           formControlName="lastName" classes="w-full"></app-input>
               </div>
               <div class="col-span-6 sm:col-span-6">
-                <label for="age" class="block text-sm font-medium text-gray-700 sm:w-1/6 w-full">Age</label>
-                <input formControlName="age" type="number" id="age"
-                       class="mt-1 block sm:w-1/6  w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="age?.invalid && (age?.dirty || age?.touched)">
-                  <span *ngIf="age?.errors?.['required']" class="text-sm text-red-500 font-medium">
-                    Age is mandatory.
-                  </span>
-                  <span *ngIf="age?.errors?.['min']" class="text-sm text-red-500 font-medium">
-                    The minimum age is {{ age?.errors?.['min']['min']}}, actual is {{ age?.errors?.['min']['actual']}}.
-                  </span>
-                  <span *ngIf="age?.errors?.['max']" class="text-sm text-red-500 font-medium">
-                    The maximum age is {{ age?.errors?.['max']['max']}}, actual is {{ age?.errors?.['max']['actual']}}.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="number" label="Age" fieldName="age"
+                           formControlName="age" classes="w-full sm:w-1/4"></app-input>
               </div>
               <div class="col-span-6 sm:col-span-6">
-                <label for="email-address"
-                       class="block text-sm font-medium text-gray-700 sm:w-1/2  w-full">Email</label>
-                <input formControlName="email" type="text" id="email-address"
-                       class="mt-1 block sm:w-1/2  w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-                  <span *ngIf="email?.errors?.['required']" class="text-sm text-red-500 font-medium">
-                    Email is mandatory.
-                  </span>
-                  <span *ngIf="email?.errors?.['email']" class="text-sm text-red-500 font-medium">
-                    Please provide a valid email.
-                  </span>
-                  <span *ngIf="email?.errors?.['emailExist']" class="text-sm text-red-500 font-medium">
-                    This email already exists.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="email" label="Email" fieldName="email"
+                           formControlName="email" classes="sm:w-1/2 w-full"></app-input>
               </div>
               <div class="col-span-6 sm:col-span-6">
                 <app-phone-widget [form]="registerForm"
-                                  [classes]="'sm:w-1/3 w-full'"
-                                  (phoneDetailsEmitter)="handlePhoneDetails($event)">
+                                  [classes]="'sm:w-1/3 w-full'">
                   <label firstLabel
-                    class="block text-sm font-medium text-gray-700">Code</label>
+                         class="block text-sm font-medium text-gray-700">Code</label>
                   <label secondLabel
-                    class="block text-sm font-medium text-gray-700 w-full">
+                         class="block text-sm font-medium text-gray-700 w-full">
                     Phone number
                   </label>
                 </app-phone-widget>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input formControlName="password" type="password" id="password"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="password?.invalid && (password?.dirty || password?.touched)">
-                  <span *ngIf="password?.errors?.['required']" class="text-sm text-red-500 font-medium ">
-                    Password is mandatory.
-                  </span>
-                  <span *ngIf="password?.errors?.['maxlength']" class="text-sm text-red-500 font-medium ">
-                    The maximum length for this field is {{ password?.errors?.['maxlength']['requiredLength']}},
-                    actual length is {{ password?.errors?.['maxlength']['actualLength']}}.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="password" label="Password" fieldName="password"
+                           formControlName="password" classes="w-full"></app-input>
                 <app-reu-error [hasError]="password?.hasError('has2up')"
                                [text]="'Two uppercase'"></app-reu-error>
                 <app-reu-error [hasError]="password?.hasError('hasSymbol')"
@@ -112,23 +48,16 @@
                                [text]="'Three lowercase'"></app-reu-error>
                 <app-reu-error [hasError]="password?.hasError('is8Long')"
                                [text]="'Eight characters'"></app-reu-error>
-                <span
-                  class="text-sm text-red-500 font-medium "
-                  *ngIf="registerForm.errors?.['hasToMatch'] && password?.dirty && confirm?.dirty">
-                  Passwords are not matching.
-                </span>
               </div>
               <div class="col-span-6 sm:col-span-3">
-                <label for="confirm" class="block text-sm font-medium text-gray-700">Confirm password</label>
-                <input formControlName="confirm" type="password" id="confirm" autocomplete=""
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
-                <ng-container *ngIf="confirm?.invalid && (confirm?.dirty || confirm?.touched)">
-                  <span *ngIf="confirm?.errors?.['required']" class="text-sm text-red-500 font-medium">
-                    Confirm password is mandatory.
-                  </span>
-                </ng-container>
+                <app-input [parentForm]="registerForm" inputType="password" label="Confirm" fieldName="confirm"
+                           formControlName="confirm" classes="w-full"></app-input>
               </div>
             </div>
+            <span *ngIf="registerForm.hasError('hasToMatch') && password?.dirty && confirm?.dirty"
+                  class="text-sm text-red-500 font-medium">
+              Passwords are not matching.
+            </span>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <button type="submit"

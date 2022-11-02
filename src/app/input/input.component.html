@@ -1,0 +1,34 @@
+<label [for]="fieldName" class="block text-sm font-medium text-gray-700">{{label}}</label>
+<input [type]="inputType" [id]="fieldName" [name]="fieldName"
+       class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
+       [ngClass]="classes"
+       [value]="value"
+       [disabled]="isDisabled"
+       (input)="onChange($event)"
+       (blur)="touched()">
+
+<div *ngIf="formField.invalid && (formField.dirty || formField.touched)">
+  <span *ngIf="formField.hasError('required')" class="text-sm text-red-500 font-medium">
+    {{label}} is mandatory.
+  </span>
+  <span *ngIf="formField.hasError('minlength')" class="text-sm text-red-500 font-medium">
+    The minimum length for this field is {{ formField.errors?.['minlength']['requiredLength']}},
+    actual length is {{ formField.errors?.['minlength']['actualLength']}}.
+  </span>
+  <span *ngIf="formField.hasError('maxlength')" class="text-sm text-red-500 font-medium">
+    The maximum length for this field is {{ formField.errors?.['maxlength']['requiredLength']}},
+    actual length is {{ formField.errors?.['maxlength']['actualLength']}}.
+  </span>
+  <span *ngIf="formField.hasError('min')" class="text-sm text-red-500 font-medium">
+    The minimum {{label}} is {{ formField.errors?.['min']['min']}}, actual is {{ formField.errors?.['min']['actual']}}.
+  </span>
+  <span *ngIf="formField.hasError('max')" class="text-sm text-red-500 font-medium">
+    The maximum {{label}} is {{ formField.errors?.['max']['max']}}, actual is {{ formField.errors?.['max']['actual']}}.
+  </span>
+  <span *ngIf="formField.hasError('email')" class="text-sm text-red-500 font-medium">
+    Please provide a valid {{label}}.
+  </span>
+  <span *ngIf="formField.hasError('emailExist')" class="text-sm text-red-500 font-medium">
+    This {{label}} already exists.
+  </span>
+</div>

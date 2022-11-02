@@ -34,7 +34,7 @@ export class PhoneWidgetComponent implements OnInit {
       code: this.phoneDetails.code
     });
 
-    this.phoneSetter();
+  //  this.phoneSetter();
   }
 
   updatePhoneDetails(obj: any) {

@@ -22,6 +22,7 @@ import {httpInterceptorProviders} from "./interceptors/http-request.interceptor"
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ToggleProfileInfoComponent } from './toggle-profile-info/toggle-profile-info.component';
 import { PhoneWidgetComponent } from './phone-widget/phone-widget.component';
+import { InputComponent } from './input/input.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PhoneWidgetComponent } from './phone-widget/phone-widget.component';
     HomePageComponent,
     ProfilePageComponent,
     ToggleProfileInfoComponent,
-    PhoneWidgetComponent
+    PhoneWidgetComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,
