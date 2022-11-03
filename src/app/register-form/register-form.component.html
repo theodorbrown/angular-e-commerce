@@ -25,29 +25,16 @@
                            formControlName="email" classes="sm:w-1/2 w-full"></app-input>
               </div>
               <div class="col-span-6 sm:col-span-6">
-                <!--  <app-phone-widget [form]="registerForm"
-                                    [classes]="'sm:w-1/3 w-full'">
-                    <label firstLabel
-                           class="block text-sm font-medium text-gray-700">Code</label>
-                    <label secondLabel
-                           class="block text-sm font-medium text-gray-700 w-full">
-                      Phone number
-                    </label>
-                  </app-phone-widget>-->
+                <app-phone-widget [parentForm]="registerForm"
+                                  fGroupName="phone"
+                                  classes="'sm:w-1/3 w-full'">
+                  <label class="block text-sm font-medium text-gray-700">Phone</label>
+                </app-phone-widget>
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <app-input [parentForm]="registerForm" inputType="password" label="Password" fieldName="password"
-                           formControlName="password" classes="w-full"></app-input>
-                <app-reu-error [hasError]="password?.hasError('has2up')"
-                               [text]="'Two uppercase'"></app-reu-error>
-                <app-reu-error [hasError]="password?.hasError('hasSymbol')"
-                               [text]="'A symbol'"></app-reu-error>
-                <app-reu-error [hasError]="password?.hasError('has2Digit')"
-                               [text]="'Two digits'"></app-reu-error>
-                <app-reu-error [hasError]="password?.hasError('has3Lo')"
-                               [text]="'Three lowercase'"></app-reu-error>
-                <app-reu-error [hasError]="password?.hasError('is8Long')"
-                               [text]="'Eight characters'"></app-reu-error>
+                           formControlName="password" classes="w-full">
+                </app-input>
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <app-input [parentForm]="registerForm" inputType="password" label="Confirm" fieldName="confirm"
@@ -58,6 +45,16 @@
                   class="text-sm text-red-500 font-medium">
               Passwords are not matching.
             </span>
+            <app-reu-error [hasError]="password?.hasError('has2up')"
+                           [text]="'Two uppercase'"></app-reu-error>
+            <app-reu-error [hasError]="password?.hasError('hasSymbol')"
+                           [text]="'A symbol'"></app-reu-error>
+            <app-reu-error [hasError]="password?.hasError('has2Digit')"
+                           [text]="'Two digits'"></app-reu-error>
+            <app-reu-error [hasError]="password?.hasError('has3Lo')"
+                           [text]="'Three lowercase'"></app-reu-error>
+            <app-reu-error [hasError]="password?.hasError('is8Long')"
+                           [text]="'Eight characters'"></app-reu-error>
           </div>
           <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <button type="submit"

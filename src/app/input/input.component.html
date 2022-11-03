@@ -1,4 +1,4 @@
-<label [for]="fieldName" class="block text-sm font-medium text-gray-700">{{label}}</label>
+<label *ngIf="needLabel" [for]="fieldName" class="block text-sm font-medium text-gray-700">{{label}}</label>
 <input [type]="inputType" [id]="fieldName" [name]="fieldName"
        class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
        [ngClass]="classes"

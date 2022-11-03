@@ -30,10 +30,10 @@ export class RegisterFormComponent implements OnInit {
       asyncValidators: [this.emailValidator],
       updateOn: 'blur'
     }],
-    phone: ['', {
-      validators: [Validators.required, Validators.pattern('[0-9]+')],
-      updateOn: 'blur'
-    }],
+    phone: this.fb.group({
+      prefix: ['FR+33', Validators.required],
+      number: ['', [Validators.required, Validators.pattern('[0-9]+')]]
+    }),
     password: ['', {
       validators: [Validators.required, Validators.maxLength(25), regExpCheck],
     }],
@@ -59,12 +59,7 @@ export class RegisterFormComponent implements OnInit {
 
   onSubmit() {
     const formValues = this.registerForm.value as unknown as CreateUser;
-    const payload: CreateUser = {
-      ...formValues,
-     phone: this.phoneDetails.country + '+' + this.phoneDetails.code + this.phone!.value
-    }
-
-    this.authService.register(payload).subscribe();
+   // this.authService.register(payload).subscribe();
   }
 
   get firstName() {
@@ -93,11 +88,5 @@ export class RegisterFormComponent implements OnInit {
 
   get confirm() {
     return this.registerForm.get('confirm');
-  }
-
-  handlePhoneDetails($event: any) {
-    this.phoneDetails = {
-      ...$event
-    }
   }
 }

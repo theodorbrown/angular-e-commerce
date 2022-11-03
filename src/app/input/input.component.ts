@@ -31,6 +31,9 @@ export class InputComponent implements ControlValueAccessor {
   @Input()
   classes!: string;
 
+  @Input()
+  needLabel: boolean = true;
+
   constructor() {
   }
 
@@ -42,7 +45,6 @@ export class InputComponent implements ControlValueAccessor {
   public changed!: (value: string) => void;
   public touched!: () => void;
   public isDisabled!: boolean;
-
 
   writeValue(value: string): void {
     this.value = value;

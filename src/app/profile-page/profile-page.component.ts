@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {EmailCheckValidator} from "../register-form/validators/email-check";
 import {regExpCheck} from "../register-form/validators/reg-exp-check";
@@ -30,8 +30,15 @@ export class ProfilePageComponent {
     validators: comparePasswordsValidator
   })
 
+  show5: boolean = true;
+  show4: boolean = true;
+  show6: boolean = true;
+  show3: boolean = true;
+  show2: boolean = true;
+  show1: boolean = true;
 
-  constructor(private fb: FormBuilder, private emailValidator: EmailCheckValidator) {
+  constructor(private fb: FormBuilder,
+              private emailValidator: EmailCheckValidator) {
   }
 
   upload(file: HTMLInputElement) {
@@ -64,5 +71,17 @@ export class ProfilePageComponent {
 
   get confirm() {
     return this.profileForm.get('confirm');
+  }
+
+  get phonePrefix() {
+    return this.profileForm.get('phone.prefix');
+  }
+
+  get phoneNumber() {
+    return this.profileForm.get('phone.number');
+  }
+
+  get phone(){
+    return this.profileForm.get('phone');
   }
 }

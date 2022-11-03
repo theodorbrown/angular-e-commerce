@@ -9,37 +9,181 @@
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">First name</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-
+            <div class="flex justify-between" *ngIf="show1;else templ1">
+              <span>
+                {{firstName?.value}}
+              </span>
+              <button (click)="show1=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ1>
+              <div class="flex justify-between">
+                <div>
+                  <app-input [parentForm]="profileForm" inputType="text" label="First name" fieldName="firstName"
+                             formControlName="firstName" classes="sm:w-80" [needLabel]="false"></app-input>
+                </div>
+                <button (click)="show1=true"
+                        [disabled]="!!firstName?.errors"
+                        [ngClass]="{'text-gray-600':!!firstName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Last name</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-
+            <div class="flex justify-between" *ngIf="show2;else templ2">
+              <span>
+                {{lastName?.value}}
+              </span>
+              <button (click)="show2=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ2>
+              <div class="flex justify-between">
+                <div>
+                  <app-input [parentForm]="profileForm" inputType="text" label="Last name" fieldName="lastName"
+                             formControlName="lastName" classes="sm:w-80" [needLabel]="false"></app-input>
+                </div>
+                <button (click)="show2=true"
+                        [disabled]="!!lastName?.errors"
+                        [ngClass]="{'text-gray-600':!!lastName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Email</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-
+            <div class="flex justify-between" *ngIf="show3;else templ3">
+              <span>
+                {{email?.value}}
+              </span>
+              <button (click)="show3=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ3>
+              <div class="flex justify-between">
+                <div>
+                  <app-input [parentForm]="profileForm" inputType="email" label="Email" fieldName="email"
+                             formControlName="email" classes="sm:w-80" [needLabel]="false"></app-input>
+                </div>
+                <button (click)="show3=true"
+                        [disabled]="!!email?.errors"
+                        [ngClass]="{'text-gray-600':!!email?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Password</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-
+            <div class="flex justify-between" *ngIf="show4;else templ4">
+              <span>
+                ********
+              </span>
+              <button (click)="show4=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ4>
+              <div class="flex justify-between">
+                <div class="lg:flex">
+                  <app-input [parentForm]="profileForm" inputType="password" label="Password" fieldName="password"
+                             formControlName="password" classes="sm:w-80" [needLabel]="false" class="mr-1"></app-input>
+                  <app-input [parentForm]="profileForm" inputType="password" label="Confirm" fieldName="confirm"
+                             formControlName="confirm" classes="sm:w-80" [needLabel]="false"></app-input>
+                </div>
+                <button (click)="show4=true"
+                        [disabled]="!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch')"
+                        [ngClass]="{'text-gray-600':!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch'), 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors || !!!confirm?.errors || !profileForm.hasError('hasToMatch')}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+              <app-reu-error [hasError]="password?.hasError('has2up')"
+                             [text]="'Two uppercase'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('hasSymbol')"
+                             [text]="'A symbol'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('has2Digit')"
+                             [text]="'Two digits'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('has3Lo')"
+                             [text]="'Three lowercase'"></app-reu-error>
+              <app-reu-error [hasError]="password?.hasError('is8Long')"
+                             [text]="'Eight characters'"></app-reu-error>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Phone</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            <app-phone-widget [parentForm]="profileForm" fGroupName="phone"></app-phone-widget>
+            <div class="flex justify-between" *ngIf="show5;else templ5">
+              <span>
+                {{phonePrefix?.value}} {{phoneNumber?.value}}
+              </span>
+              <button (click)="show5=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ5>
+              <div class="flex justify-between">
+                <div>
+                  <app-phone-widget [parentForm]="profileForm" fGroupName="phone"
+                                    classes="w-3/4 sm:w-56"></app-phone-widget>
+                </div>
+                <button (click)="show5=true"
+                        [disabled]="!!phone?.errors"
+                        [ngClass]="{'text-gray-600':!!phone?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!phone?.errors}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
           <dt class="text-sm font-medium text-gray-500">Age</dt>
           <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-
+            <div class="flex justify-between" *ngIf="show6;else templ6">
+              <span>
+                {{age?.value}}
+              </span>
+              <button (click)="show6=false"
+                      class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">
+                Update
+              </button>
+            </div>
+            <ng-template #templ6>
+              <div class="flex justify-between">
+                <div>
+                  <app-input [parentForm]="profileForm" inputType="number" label="Age" fieldName="age"
+                             formControlName="age" classes="sm:w-80" [needLabel]="false"></app-input>
+                </div>
+                <button (click)="show6=true"
+                        [disabled]="!!age?.errors"
+                        [ngClass]="{'text-gray-600':!!age?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!age?.errors}"
+                        class="font-medium">
+                  Save
+                </button>
+              </div>
+            </ng-template>
           </dd>
         </div>
         <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
