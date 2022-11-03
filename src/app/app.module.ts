@@ -20,7 +20,6 @@ import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSett
 import {HomePageComponent} from './home-page/home-page.component';
 import {httpInterceptorProviders} from "./interceptors/http-request.interceptor";
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { ToggleProfileInfoComponent } from './toggle-profile-info/toggle-profile-info.component';
 import { PhoneWidgetComponent } from './phone-widget/phone-widget.component';
 import { InputComponent } from './input/input.component';
 
@@ -32,7 +31,6 @@ import { InputComponent } from './input/input.component';
     LoginFormComponent,
     HomePageComponent,
     ProfilePageComponent,
-    ToggleProfileInfoComponent,
     PhoneWidgetComponent,
     InputComponent
   ],

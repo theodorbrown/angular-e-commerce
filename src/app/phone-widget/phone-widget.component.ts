@@ -1,7 +1,6 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {defaultPhoneDetails, phoneConfig} from "../register-form/validators/phone-config";
-import {FormGroup} from "@angular/forms";
-import {SharedPhoneDetailsService} from "../services/shared-phone-details.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {Phone, phoneSpecs} from "../register-form/validators/phone-config";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-phone-widget',
@@ -10,60 +9,42 @@ import {SharedPhoneDetailsService} from "../services/shared-phone-details.servic
 export class PhoneWidgetComponent implements OnInit {
 
   select: boolean = false;
-
-  phoneDetails = {
-    ...defaultPhoneDetails
-  }
-
-  phoneConfig = [
-    ...phoneConfig
-  ]
+  phoneSpecs: Phone[] = phoneSpecs;
 
   @Input()
-  form!: FormGroup
+  parentForm!: FormGroup;
 
   @Input()
-  classes: string = '';
+  fGroupName!: string;
 
-  constructor(private sharedPhoneDetailsService: SharedPhoneDetailsService) {
+  minLength: number = 9;
+  maxLength: number = 9;
+
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.sharedPhoneDetailsService.announcePhoneDetails({
-      country: this.phoneDetails.country,
-      code: this.phoneDetails.code
-    });
-
-  //  this.phoneSetter();
+    this.setLengths(this.prefix.value);
   }
 
-  updatePhoneDetails(obj: any) {
-    this.phoneDetails = {
-      ...obj
-    }
-    this.sharedPhoneDetailsService.announcePhoneDetails({
-      country: this.phoneDetails.country,
-      code: this.phoneDetails.code
-    });
+  get prefix() {
+    return this.parentForm.get('phone.prefix') as FormControl;
   }
 
-  get phone() {
-    return this.form.get('phone');
+  setPrefix(value: string) {
+    this.parentForm.get('phone.prefix')?.setValue(value);
+    this.setLengths(value);
   }
 
-  phoneSetter() {
-    const phoneValue = this.phone?.value;
-    const country = phoneValue.slice(0, 2);
-    const row = this.phoneConfig.find(elem => elem.country === country);
-    const codeLength = String(row!.code).length;
-    const finalValue = phoneValue.slice(3 + codeLength);
-    setTimeout(() => {
-      this.phone?.setValue(finalValue);
-    }, 0)
+  get number() {
+    return this.parentForm.get('phone.number') as FormControl;
   }
 
+  //helper
+  setLengths(value: string) {
+    const country = value.slice(0, 2);
+    const line = this.phoneSpecs.find(elem => elem.country === country);
+    this.minLength = line!.minlength;
+    this.maxLength = line!.maxlength;
+  }
 }
-
-//erreur pas bien allignée dans phone
-//le champs phone qui doit supprimmer des cars en fonction du country et code
-

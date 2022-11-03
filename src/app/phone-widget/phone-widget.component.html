@@ -1,40 +1,35 @@
 <!--Global div-->
 <div>
-  <div class="flex space-x-0.5">
-    <!--First flexed div-->
-    <div>
+  <form [formGroup]="parentForm">
+    <div class="flex space-x-0.5" [formGroupName]="fGroupName">
+      <!--First flexed div-->
       <ng-content select="[firstLabel]"></ng-content>
       <div class="relative mt-1">
         <button
           (click)="select=!select"
           type="button"
-          class="relative cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm">
-          <span class="flex items-center">
-            <span>{{ phoneDetails.country }}</span>
-            <span class="ml-3 block ">+{{phoneDetails.code}}</span>
+          class="w-28 relative rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm">
+          <span>{{prefix.value}}</span>
+          <input formControlName="prefix" class="hidden">
+          <span class="absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+            <fa-icon icon="chevron-down"></fa-icon>
           </span>
-          <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-          <fa-icon icon="chevron-down"></fa-icon>
-        </span>
         </button>
         <ul
           (click)="select=false"
           [ngClass]="{'hidden':!select}"
           class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          <ng-container *ngFor="let obj of phoneConfig">
+          <ng-container *ngFor="let obj of phoneSpecs">
             <li
-              (click)="updatePhoneDetails(obj)"
+              (click)="setPrefix(obj.country + obj.code)"
               class="relative cursor-default select-none py-2 pl-3 pr-9 hover:bg-amber-600 hover:text-white">
-              <div class="flex items-center">
-                <span>{{obj.country}}</span>
                 <span
-                  [ngClass]="{'font-semibold':phoneDetails.country === obj.country}"
+                  [ngClass]="{'font-semibold':prefix.value===(obj.country+obj.code)}"
                   class="ml-3 block">
-                      +{{obj.code}}
-                  </span>
-              </div>
+                      {{obj.country + obj.code}}
+                </span>
               <ng-container
-                *ngIf="phoneDetails.country === obj.country">
+                *ngIf="prefix.value===(obj.country+obj.code)">
                   <span
                     class="text-amber-600 absolute inset-y-0 right-0 flex items-center pr-4">
                       <fa-icon icon="check"></fa-icon>
@@ -44,32 +39,31 @@
           </ng-container>
         </ul>
       </div>
+      <!--Second flexed div-->
+      <div class="w-full">
+        <ng-content select="[secondLabel]"></ng-content>
+        <input
+          [maxlength]="maxLength"
+          [minlength]="minLength"
+          class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
+          formControlName="number"
+          type="text">
+      </div>
     </div>
-    <!--Second flexed div-->
-    <div class="w-full" [formGroup]="form">
-      <ng-content select="[secondLabel]"></ng-content>
-      <input
-        [minlength]="phoneDetails.minlength"
-        [maxlength]="phoneDetails.maxlength"
-        formControlName="phone"
-        type="text"
-        [ngClass]="classes"
-        class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm">
+    <!--Errors div-->
+    <div *ngIf="number.invalid && (number.dirty || number.touched)">
+      <span *ngIf="number.hasError('required')" class="text-sm text-red-500 font-medium">
+        Phone number is mandatory.
+      </span>
+      <span *ngIf="number.hasError('pattern')" class="text-sm text-red-500 font-medium">
+        Only numbers are accepted.
+      </span>
+      <span *ngIf="number.hasError('maxlength')" class="text-sm text-red-500 font-medium">
+        Too long for your country code. Required length is {{ number.errors?.['maxlength']['requiredLength'] }}.
+      </span>
+      <span *ngIf="number.hasError('minlength')" class="text-sm text-red-500 font-medium">
+        Too short for your country code. Required length is {{ number.errors?.['minlength']['requiredLength'] }}.
+      </span>
     </div>
-  </div>
-  <!--Errors div-->
-  <div *ngIf="phone?.invalid && (phone?.dirty || phone?.touched)">
-  <span *ngIf="phone?.errors?.['required']" class="text-sm text-red-500 font-medium">
-    Phone number is mandatory.
-  </span>
-    <span *ngIf="phone?.errors?.['pattern']" class="text-sm text-red-500 font-medium">
-    Only numbers are accepted.
-  </span>
-    <span *ngIf="phone?.errors?.['maxlength']" class="text-sm text-red-500 font-medium">
-    Too long for your country code. Required length is {{ phone?.errors?.['maxlength']['requiredLength'] }}.
-  </span>
-    <span *ngIf="phone?.errors?.['minlength']" class="text-sm text-red-500 font-medium">
-    Too short for your country code. Required length is {{ phone?.errors?.['minlength']['requiredLength'] }}.
-  </span>
-  </div>
+  </form>
 </div>
