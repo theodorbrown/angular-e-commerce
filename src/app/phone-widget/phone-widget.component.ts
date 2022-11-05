@@ -17,9 +17,6 @@ export class PhoneWidgetComponent implements OnInit {
   @Input()
   fGroupName!: string;
 
-  @Input()
-  classes: string | undefined;
-
   minLength: number = 9;
   maxLength: number = 9;
 

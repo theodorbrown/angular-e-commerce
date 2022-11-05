@@ -14,6 +14,12 @@ export class UsersService {
   userExist(email: string): Observable<any>{
     return this.http.get<any>(GlobalConstants.API_URL + `users/exist/${email}`);
   }
+
+  getUser(){
+    return this.http.get<any>(GlobalConstants.API_URL + 'users');
+  }
+
+
 }
 
 //TODO : Make email check func and const for API URL

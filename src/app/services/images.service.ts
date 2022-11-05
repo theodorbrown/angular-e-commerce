@@ -14,4 +14,8 @@ export class ImagesService {
     // @ts-ignore
     return this.http.get<any>(GlobalConstants.API_URL + 'images', {responseType: 'blob'});
   }
+
+  uploadFile(file: any): Observable<any>{
+    return this.http.post<any>(GlobalConstants.API_URL + 'images', file);
+  }
 }

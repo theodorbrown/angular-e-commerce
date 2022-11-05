@@ -2,13 +2,13 @@
 <div>
   <form [formGroup]="parentForm">
     <ng-content></ng-content>
-    <div class="flex space-x-0.5" [formGroupName]="fGroupName">
-      <!--First flexed div--><div class="relative mt-1">
+    <div [formGroupName]="fGroupName" class="sm:flex">
+      <!--First flexed div-->
+      <div class="relative mt-1">
         <button
           (click)="select=!select"
           type="button"
-          style="height: 38px"
-          class="w-28relative rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm">
+          class="relative rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500 sm:text-sm">
           <span>{{prefix.value}}</span>
           <input formControlName="prefix" class="hidden">
           <span class="absolute inset-y-0 right-0 ml-4 flex items-center pr-2">
@@ -18,7 +18,7 @@
         <ul
           (click)="select=false"
           [ngClass]="{'hidden':!select}"
-          class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          class="absolute z-10 mt-1 max-h-56 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ng-container *ngFor="let obj of phoneSpecs">
             <li
               (click)="setPrefix(obj.country + obj.code)"
@@ -40,12 +40,11 @@
         </ul>
       </div>
       <!--Second flexed div-->
-      <div class="w-full">
+      <div class="">
         <input
           [maxlength]="maxLength"
           [minlength]="minLength"
-          [ngClass]="classes"
-          class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
+          class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-amber-500 focus:ring-amber-500 sm:text-sm w-full"
           formControlName="number"
           type="text">
       </div>

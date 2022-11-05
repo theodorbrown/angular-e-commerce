@@ -24,12 +24,17 @@
                   <app-input [parentForm]="profileForm" inputType="text" label="First name" fieldName="firstName"
                              formControlName="firstName" classes="sm:w-80" [needLabel]="false"></app-input>
                 </div>
-                <button (click)="show1=true"
-                        [disabled]="!!firstName?.errors"
-                        [ngClass]="{'text-gray-600':!!firstName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show1=true; updateData()"
+                          [disabled]="!!firstName?.errors"
+                          [ngClass]="{'text-gray-600':!!firstName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show1=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </ng-template>
           </dd>
@@ -52,12 +57,17 @@
                   <app-input [parentForm]="profileForm" inputType="text" label="Last name" fieldName="lastName"
                              formControlName="lastName" classes="sm:w-80" [needLabel]="false"></app-input>
                 </div>
-                <button (click)="show2=true"
-                        [disabled]="!!lastName?.errors"
-                        [ngClass]="{'text-gray-600':!!lastName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show2=true"
+                          [disabled]="!!lastName?.errors"
+                          [ngClass]="{'text-gray-600':!!lastName?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!lastName?.errors}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show2=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </ng-template>
           </dd>
@@ -80,12 +90,17 @@
                   <app-input [parentForm]="profileForm" inputType="email" label="Email" fieldName="email"
                              formControlName="email" classes="sm:w-80" [needLabel]="false"></app-input>
                 </div>
-                <button (click)="show3=true"
-                        [disabled]="!!email?.errors"
-                        [ngClass]="{'text-gray-600':!!email?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show3=true"
+                          [disabled]="!!email?.errors"
+                          [ngClass]="{'text-gray-600':!!email?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!email?.errors}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show3=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </ng-template>
           </dd>
@@ -110,12 +125,17 @@
                   <app-input [parentForm]="profileForm" inputType="password" label="Confirm" fieldName="confirm"
                              formControlName="confirm" classes="sm:w-80" [needLabel]="false"></app-input>
                 </div>
-                <button (click)="show4=true"
-                        [disabled]="!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch')"
-                        [ngClass]="{'text-gray-600':!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch'), 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!firstName?.errors || !!!confirm?.errors || !profileForm.hasError('hasToMatch')}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show4=true"
+                          [disabled]="!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch')"
+                          [ngClass]="{'text-gray-600':!!password?.errors || !!confirm?.errors || profileForm.hasError('hasToMatch'), 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!password?.errors && !!!confirm?.errors && !profileForm.hasError('hasToMatch')}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show4=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
               <app-reu-error [hasError]="password?.hasError('has2up')"
                              [text]="'Two uppercase'"></app-reu-error>
@@ -145,15 +165,19 @@
             <ng-template #templ5>
               <div class="flex justify-between">
                 <div>
-                  <app-phone-widget [parentForm]="profileForm" fGroupName="phone"
-                                    classes="w-3/4 sm:w-56"></app-phone-widget>
+                  <app-phone-widget [parentForm]="profileForm" fGroupName="phone"></app-phone-widget>
                 </div>
-                <button (click)="show5=true"
-                        [disabled]="!!phone?.errors"
-                        [ngClass]="{'text-gray-600':!!phone?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!phone?.errors}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show5=true"
+                          [disabled]="!!phone?.errors"
+                          [ngClass]="{'text-gray-600':!!phone?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!phone?.errors}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show5=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </ng-template>
           </dd>
@@ -176,12 +200,17 @@
                   <app-input [parentForm]="profileForm" inputType="number" label="Age" fieldName="age"
                              formControlName="age" classes="sm:w-80" [needLabel]="false"></app-input>
                 </div>
-                <button (click)="show6=true"
-                        [disabled]="!!age?.errors"
-                        [ngClass]="{'text-gray-600':!!age?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!age?.errors}"
-                        class="font-medium">
-                  Save
-                </button>
+                <div class="my-auto">
+                  <button (click)="show6=true"
+                          [disabled]="!!age?.errors"
+                          [ngClass]="{'text-gray-600':!!age?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!!!age?.errors}"
+                          class="font-medium p-2">
+                    Save
+                  </button>
+                  <button (click)="show6=true;" class="p-2 font-medium text-red-600 hover:text-red-500 cursor-pointer">
+                    Cancel
+                  </button>
+                </div>
               </div>
             </ng-template>
           </dd>
@@ -203,16 +232,16 @@
                   <span class="ml-2 w-0 flex-1 truncate">{{profileForm.get('profileImage')!.value}}</span>
                 </div>
               </div>
-              <form enctype="multipart/form-data" class="py-3 pl-3 pr-4 text-sm sm:flex sm:justify-between text-center">
+              <div class="py-3 pl-3 pr-4 text-sm sm:flex sm:justify-between text-center">
                 <div>
-                  <input #file type="file" name="file" required>
+                  <input #file type="file">
                 </div>
                 <div class="mt-5 sm:mt-0">
                   <a
                     (click)="upload(file)"
                     class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">Download & Save</a>
                 </div>
-              </form>
+              </div>
             </div>
           </dd>
         </div>

@@ -3,12 +3,15 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {EmailCheckValidator} from "../register-form/validators/email-check";
 import {regExpCheck} from "../register-form/validators/reg-exp-check";
 import {comparePasswordsValidator} from "../register-form/validators/pwd-compare";
+import {ImagesService} from "../services/images.service";
+import {AuthService} from "../services/auth.service";
+import {UsersService} from "../services/users.service";
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html'
 })
-export class ProfilePageComponent {
+export class ProfilePageComponent implements OnInit {
 
   profileForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
@@ -37,15 +40,36 @@ export class ProfilePageComponent {
   show2: boolean = true;
   show1: boolean = true;
 
+
   constructor(private fb: FormBuilder,
-              private emailValidator: EmailCheckValidator) {
+              private emailValidator: EmailCheckValidator,
+              private imageService: ImagesService,
+              private authService: AuthService,
+              private usersService: UsersService) {
+  }
+
+  ngOnInit(): void {
+    //get current user
+    //TODO : Unsubscribe on destroy
+    this.usersService.getUser().subscribe(user => {
+      this.firstName?.setValue(user.firstName);
+      this.lastName?.setValue(user.lastName);
+      this.email?.setValue(user.email);
+      this.age?.setValue(user.age);
+      this.phoneNumber?.setValue(user.phone);
+      this.profileImage?.setValue(user.profileImage);
+    });
+
+
   }
 
   upload(file: HTMLInputElement) {
     if (file.files && file.files.length > 0) {
       const extractedFile = (file.files[0] as File);
       this.profileForm.get('profileImage')!.setValue(extractedFile.name);
-      //TODO call back-end route
+      const formData = new FormData();
+      formData.append('file', extractedFile)
+      this.imageService.uploadFile(formData).subscribe(_ => this.authService.ls.next(true));
     }
   }
 
@@ -81,7 +105,15 @@ export class ProfilePageComponent {
     return this.profileForm.get('phone.number');
   }
 
-  get phone(){
+  get phone() {
     return this.profileForm.get('phone');
+  }
+
+  get profileImage() {
+    return this.profileForm.get('profileImage');
+  }
+
+  updateData() {
+    console.log(this.profileForm.value)
   }
 }
