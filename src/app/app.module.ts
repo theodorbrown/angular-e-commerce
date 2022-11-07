@@ -19,9 +19,10 @@ import {LoginFormComponent} from './login-form/login-form.component';
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 import {HomePageComponent} from './home-page/home-page.component';
 import {httpInterceptorProviders} from "./interceptors/http-request.interceptor";
-import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { PhoneWidgetComponent } from './phone-widget/phone-widget.component';
-import { InputComponent } from './input/input.component';
+import {PhoneWidgetComponent} from './phone-widget/phone-widget.component';
+import {InputComponent} from './input/input.component';
+import { ProfilePageComponent } from './profile-page-two/profile-page.component';
+import { ProfilePartComponent } from './profile-part/profile-part.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,10 @@ import { InputComponent } from './input/input.component';
     ReuErrorComponent,
     LoginFormComponent,
     HomePageComponent,
-    ProfilePageComponent,
     PhoneWidgetComponent,
-    InputComponent
+    InputComponent,
+    ProfilePageComponent,
+    ProfilePartComponent
   ],
   imports: [
     BrowserModule,

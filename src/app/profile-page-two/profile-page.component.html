@@ -1,0 +1,63 @@
+<div>
+  <div class="px-4 py-5 bg-indigo-100">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Profile Information</h3>
+    <p class="pt-1 max-w-2xl text-sm text-gray-500">Personal details.</p>
+  </div>
+  <div class="border-t border-gray-300">
+    <form>
+      <app-profile-part [parentForm]="profileForm" fieldName="firstName" label="First name" inputType="text"
+                        [gray]="true"></app-profile-part>
+      <app-profile-part [parentForm]="profileForm" fieldName="lastName" label="Last name"
+                        inputType="text"></app-profile-part>
+      <app-profile-part [parentForm]="profileForm" fieldName="email" label="Email" inputType="email"
+                        [gray]="true"></app-profile-part>
+      <app-profile-part [parentForm]="profileForm" fieldName="password" label="Password"
+                        inputType="password"></app-profile-part>
+      <app-profile-part [parentForm]="profileForm" fieldName="phone" label="Phone" inputType="text"
+                        [gray]="true"></app-profile-part>
+
+      <div class="grid grid-cols-5 space-x-3 p-5">
+        <div class="col-span-1">
+          Plus member
+        </div>
+        <!--Case 1-->
+        <div class="col-span-3">
+          No subscription
+        </div>
+
+        <div class="col-span-1 mx-auto">
+          <button class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">Look up</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-5 space-x-3 p-5 bg-gray-100">
+        <div class="col-span-1">
+          Profile image
+        </div>
+        <!--Case 1-->
+        <div class="col-span-4 sm:col-span-3">
+          <div class="divide-y divide-gray-200 rounded-md border border-gray-200">
+            <div class="flex items-center justify-between py-3 pl-3 pr-4 text-sm w-full">
+              <div class="text-sm mr-5">
+                <span>Current file:</span>
+              </div>
+              <div class="flex w-0 flex-1 items-center">
+                <fa-icon icon="paperclip"></fa-icon>
+                <span class="ml-2 w-0 flex-1 truncate">{{profileForm.get('profileImage')!.value}}</span>
+              </div>
+            </div>
+            <div class="py-3 pl-3 pr-4 text-sm sm:flex sm:justify-between text-center">
+              <div>
+                <input #file type="file" class="w-full">
+              </div>
+              <div class="mt-5 sm:mt-0">
+                <a
+                  (click)="upload(file)"
+                  class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer">Download & Save</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

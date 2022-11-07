@@ -1,0 +1,62 @@
+<div class="grid grid-cols-5 space-x-3 p-5" [ngClass]="gray ? 'bg-gray-100' : 'bg-white-100'">
+  <div class="col-span-1">
+    {{ label }}
+  </div>
+  <!--Case 1-->
+  <div class="col-span-3" *ngIf="!onSwitch">
+    <!--Default-->
+    <ng-container *ngIf="fieldName!=='phone' && fieldName!=='password'">
+      <p class="truncate">
+        {{ formField?.value }}
+      </p>
+    </ng-container>
+    <ng-container *ngIf="fieldName==='password'">
+      ********
+    </ng-container>
+    <ng-container *ngIf="fieldName==='phone'">
+      {{ formField?.value?.['prefix'] + ' ' + formField?.value?.['number'] }}
+    </ng-container>
+  </div>
+  <div class="col-span-1 mx-auto" *ngIf="!onSwitch">
+    <button (click)="onSwitch=true" class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer ">Update
+    </button>
+  </div>
+  <!--Case 2-->
+  <div class="col-span-3" *ngIf="onSwitch" [formGroup]="parentForm">
+    <!--Regular inputs-->
+    <app-input *ngIf="fieldName!=='phone'" [parentForm]="parentForm" [inputType]="inputType" [label]="label"
+               [fieldName]="fieldName"
+               [formControlName]="fieldName" classes="sm:w-80" [needLabel]="false"></app-input>
+    <!--Password case : confirm input in supplement-->
+    <app-input *ngIf="fieldName==='password'" [parentForm]="parentForm" [inputType]="inputType" label="Confirm"
+               fieldName="confirm"
+               formControlName="confirm" classes="sm:w-80" [needLabel]="false"></app-input>
+    <!--Phone case-->
+    <app-phone-widget *ngIf="fieldName==='phone'" [parentForm]="parentForm" fGroupName="phone"></app-phone-widget>
+
+    <!--Re usable errors for password-->
+    <div *ngIf="fieldName==='password'">
+      <app-reu-error [hasError]="formField?.hasError('has2up')"
+                     [text]="'Two uppercase'"></app-reu-error>
+      <app-reu-error [hasError]="formField?.hasError('hasSymbol')"
+                     [text]="'A symbol'"></app-reu-error>
+      <app-reu-error [hasError]="formField?.hasError('has2Digit')"
+                     [text]="'Two digits'"></app-reu-error>
+      <app-reu-error [hasError]="formField?.hasError('has3Lo')"
+                     [text]="'Three lowercase'"></app-reu-error>
+      <app-reu-error [hasError]="formField?.hasError('is8Long')"
+                     [text]="'Eight characters'"></app-reu-error>
+    </div>
+  </div>
+  <div class="col-span-1 mx-auto self-end py-2" *ngIf="onSwitch">
+    <button type="button"
+            class="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer px-1"
+            (click)="onSwitch=false; updateUser(fieldName, formField?.value!)"
+            [disabled]="!!formField?.errors"
+            [ngClass]="{'text-gray-600':!!formField?.errors, 'text-indigo-600 hover:text-indigo-500 cursor-pointer':!(!!formField?.errors)}">
+      Save
+    </button>
+    <button (click)="onSwitch=false" class="font-medium text-red-600 hover:text-red-500 cursor-pointer px-1">Cancel
+    </button>
+  </div>
+</div>

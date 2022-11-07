@@ -1,4 +1,4 @@
-export type CreateUser = {
+export type registerUser = {
   firstName: string,
   lastName: string,
   age: number,

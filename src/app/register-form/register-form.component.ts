@@ -4,7 +4,7 @@ import {regExpCheck} from "./validators/reg-exp-check";
 import {comparePasswordsValidator} from "./validators/pwd-compare";
 import {EmailCheckValidator} from "./validators/email-check";
 import {AuthService} from "../services/auth.service";
-import {CreateUser} from "../types";
+import {registerUser} from "../types";
 
 @Component({
   selector: 'app-register-form',
@@ -58,8 +58,16 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const formValues = this.registerForm.value as unknown as CreateUser;
-   // this.authService.register(payload).subscribe();
+    const formValues = this.registerForm.value;
+    this.authService.register({
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      age: Number(formValues.age),
+      phone: formValues.phone?.number,
+      email: formValues.email,
+      password: formValues.password,
+      confirm: formValues.confirm,
+    }).subscribe();
   }
 
   get firstName() {

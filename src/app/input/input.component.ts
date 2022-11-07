@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -33,9 +33,6 @@ export class InputComponent implements ControlValueAccessor {
 
   @Input()
   needLabel: boolean = true;
-
-  constructor() {
-  }
 
   get formField() {
     return this.parentForm.get(this.fieldName) as FormControl;

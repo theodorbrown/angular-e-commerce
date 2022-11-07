@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {GlobalConstants} from "../constants/global-constants";
 import {BehaviorSubject, tap,} from "rxjs";
 import {Router} from "@angular/router";
-import {CreateUser, LoginUser} from "../types";
+import {LoginUser, registerUser} from "../types";
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,9 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  //TODO : type
-  register(payload: CreateUser) {
+  register(payload: any) {
     //no token needed
-    return this.http.post<CreateUser>(GlobalConstants.API_URL + 'auth/register', payload).pipe(
+    return this.http.post<any>(GlobalConstants.API_URL + 'auth/register', payload).pipe(
       tap(_ => {
         this.router.navigate(['/signin']);
       })
@@ -55,12 +54,12 @@ export class AuthService {
     //will return success true
   }
 
-  addToLocalStorage(){
-    localStorage.setItem('connected','true');
+  addToLocalStorage() {
+    localStorage.setItem('connected', 'true');
     this.ls.next(true);
   }
 
-  removeFromLocalStorage(){
+  removeFromLocalStorage() {
     localStorage.removeItem('connected');
     this.ls.next(false);
   }

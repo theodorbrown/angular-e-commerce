@@ -1,14 +1,14 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, Renderer2, ViewChildren} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
-import {EmailCheckValidator} from "../register-form/validators/email-check";
 import {regExpCheck} from "../register-form/validators/reg-exp-check";
 import {comparePasswordsValidator} from "../register-form/validators/pwd-compare";
+import {EmailCheckValidator} from "../register-form/validators/email-check";
 import {ImagesService} from "../services/images.service";
 import {AuthService} from "../services/auth.service";
 import {UsersService} from "../services/users.service";
 
 @Component({
-  selector: 'app-profile-page',
+  selector: 'app-profile-page-two',
   templateUrl: './profile-page.component.html'
 })
 export class ProfilePageComponent implements OnInit {
@@ -24,7 +24,7 @@ export class ProfilePageComponent implements OnInit {
     password: ['', [Validators.required, Validators.maxLength(25), regExpCheck]],
     confirm: ['', [Validators.required, Validators.maxLength(25)]],
     phone: this.fb.group({
-      prefix: ['FR+33', Validators.required],
+      prefix: ['', Validators.required],
       number: ['', [Validators.required, Validators.pattern('[0-9]+')]]
     }),
     age: ['', [Validators.required, Validators.min(18), Validators.max(119)]],
@@ -33,24 +33,13 @@ export class ProfilePageComponent implements OnInit {
     validators: comparePasswordsValidator
   })
 
-  show5: boolean = true;
-  show4: boolean = true;
-  show6: boolean = true;
-  show3: boolean = true;
-  show2: boolean = true;
-  show1: boolean = true;
-
-
   constructor(private fb: FormBuilder,
               private emailValidator: EmailCheckValidator,
               private imageService: ImagesService,
               private authService: AuthService,
-              private usersService: UsersService) {
-  }
+              private usersService: UsersService) { }
 
   ngOnInit(): void {
-    //get current user
-    //TODO : Unsubscribe on destroy
     this.usersService.getUser().subscribe(user => {
       this.firstName?.setValue(user.firstName);
       this.lastName?.setValue(user.lastName);
@@ -59,8 +48,6 @@ export class ProfilePageComponent implements OnInit {
       this.phoneNumber?.setValue(user.phone);
       this.profileImage?.setValue(user.profileImage);
     });
-
-
   }
 
   upload(file: HTMLInputElement) {
@@ -89,31 +76,11 @@ export class ProfilePageComponent implements OnInit {
     return this.profileForm.get('email');
   }
 
-  get password() {
-    return this.profileForm.get('password');
-  }
-
-  get confirm() {
-    return this.profileForm.get('confirm');
-  }
-
-  get phonePrefix() {
-    return this.profileForm.get('phone.prefix');
-  }
-
   get phoneNumber() {
     return this.profileForm.get('phone.number');
   }
 
-  get phone() {
-    return this.profileForm.get('phone');
-  }
-
   get profileImage() {
     return this.profileForm.get('profileImage');
-  }
-
-  updateData() {
-    console.log(this.profileForm.value)
   }
 }

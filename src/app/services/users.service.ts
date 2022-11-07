@@ -19,6 +19,10 @@ export class UsersService {
     return this.http.get<any>(GlobalConstants.API_URL + 'users');
   }
 
+  updateUser(payload: any){
+    return this.http.post<any>(GlobalConstants.API_URL + 'users', payload);
+  }
+
 
 }
 
