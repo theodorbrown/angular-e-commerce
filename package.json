@@ -21,6 +21,7 @@
     "@fortawesome/angular-fontawesome": "^0.11.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
+    "@geoapify/geocoder-autocomplete": "^1.4.2",
     "@tailwindcss/forms": "^0.5.3",
     "ng-recaptcha": "^10.0.0",
     "rxjs": "~7.5.0",

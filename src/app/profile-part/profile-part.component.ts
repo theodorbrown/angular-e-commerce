@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {UsersService} from "../services/users.service";
+import {AuthService} from "../services/auth.service";
+
 
 @Component({
   selector: 'app-profile-part',
@@ -24,7 +26,9 @@ export class ProfilePartComponent implements OnInit {
   @Input()
   gray: boolean = false;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+              private authService: AuthService) {
+  }
 
   ngOnInit(): void {
   }
@@ -36,6 +40,6 @@ export class ProfilePartComponent implements OnInit {
   updateUser(fieldName: string, value: string | number) {
     this.usersService.updateUser({
       [fieldName]: value
-    }).subscribe();
+    }).subscribe(_ => this.authService.ls.next(true));
   }
 }

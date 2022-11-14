@@ -1,0 +1,18 @@
+<div class="h-full">
+  <div *ngIf="address;else noContent" class="bg-white p-5 rounded flex items-center justify-between space-x-2">
+    <div>
+      <p class="font-medium">Address "{{address.name}}" details :</p>
+      <p class="font-serif">{{address.streetNumber}} {{address.complement}} {{address.street}}</p>
+      <p class="font-serif">{{address.zipCode}} {{address.city}} {{address.region}} {{address.country}}</p>
+    </div>
+    <div>
+      <button (click)="deleteAddress(address._id)" class="px-3 py-2 bg-red-500 rounded-2xl text-white text-sm hover:bg-red-700">Delete</button>
+    </div>
+  </div>
+  <ng-template #noContent>
+    <div class="flex justify-center h-full items-center">
+      <p class="font-medium">No details to show...</p>
+    </div>
+  </ng-template>
+</div>
+

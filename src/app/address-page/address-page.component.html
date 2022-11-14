@@ -1,0 +1,41 @@
+<div>
+  <div class="px-4 py-5 bg-indigo-100">
+    <h3 class="text-lg font-medium leading-6 text-gray-900">Addresses</h3>
+    <p class="pt-1 max-w-2xl text-sm text-gray-500">Add or change your addresses.</p>
+  </div>
+  <div class="grid grid-rows-3 md:grid-cols-3 md:grid-flow-col grid-flow-row gap-1">
+    <div class="md:row-span-3 row-span-2 md:col-span-1 col-span-2 bg-gray-200 p-2">
+      <app-address-list></app-address-list>
+    </div>
+    <div class="row-span-1 col-span-2 bg-gray-200 p-2">
+      <app-address-details></app-address-details>
+    </div>
+    <div class="row-span-2 col-span-2 bg-gray-100 p-2">
+      <div class="flex space-x-0.5 p-2">
+        <input *ngIf="provideManually" class="h-9 w-16" type="text" [(ngModel)]="streetNumber"
+               (keyup)="setAddressValidity()">
+        <div id="autocomplete" class="autocomplete-container relative w-full" #geocoding></div>
+      </div>
+      <div *ngIf="provideManually && !streetNumber" class="p-1">
+        <span>You need to provide manually your street number. </span>
+        <div class="relative inline">
+          <fa-icon (mouseenter)="showInfo=true" (mouseleave)="showInfo=false" icon="info-circle"
+                   class="cursor-pointer relative"></fa-icon>
+          <div *ngIf="showInfo" class="bg-white absolute sm:left-0 right-0 p-3 w-28 text-sm rounded">
+            Autocomplete can't handle numbers for this street.
+          </div>
+        </div>
+      </div>
+      <p *ngIf="provideManually && streetNumber">Your street number is <strong>{{streetNumber}}</strong>, be sure of
+        what your provided.</p>
+      <div class="p-2">
+        <input class="h-9 w-40" type="text" placeholder="Enter a name here" [(ngModel)]="name" (keyup)="setAddressValidity()">
+      </div>
+      <button
+        (click)="addAddress()"
+        [disabled]="!addressIsValid" class="rounded px-3 py-2 text-sm float-right font-medium"
+        [ngClass]="addressIsValid ? 'bg-green-400 cursor-pointer':'bg-gray-400 cursor-default'">Add this address
+      </button>
+    </div>
+  </div>
+</div>

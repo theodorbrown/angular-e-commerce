@@ -32,7 +32,7 @@ export class HttpRequestInterceptor implements HttpInterceptor {
         if (error instanceof HttpErrorResponse && error.status === 0) {
           return throwError(() => {
             return {
-              server: 'Serveur injoignable : réessayer plus tard'
+              server: 'Cannot reach server.'
             }
           });
         }
@@ -61,14 +61,21 @@ export class HttpRequestInterceptor implements HttpInterceptor {
           }),
           catchError((error) => {
             //error -> no new at + rt
-            if (error.status == '401') {
-              //TODO: What if ok new at and rt but resource still 401 Unauthorized?
-              console.log('new at and rt but 401?');
+            if (error.statusCode == '401') {
+              return throwError(() => {
+                return {
+                  server: 'You don\'t have the right privileges'
+                }
+              });
             }
             this.isRefreshing = false;
-            if (error.status == '403') {
-              //for example refresh legit but not matching hash
+            if (error.statusCode == '403') {
               this.userDirty();
+              return throwError(() => {
+                return {
+                  server: 'Your credentials are invalid you have been logged out.'
+                }
+              });
             }
             return throwError(() => error);
           })

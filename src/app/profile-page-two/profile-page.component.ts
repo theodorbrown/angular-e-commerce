@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {regExpCheck} from "../register-form/validators/reg-exp-check";
 import {comparePasswordsValidator} from "../register-form/validators/pwd-compare";
@@ -24,7 +24,7 @@ export class ProfilePageComponent implements OnInit {
     password: ['', [Validators.required, Validators.maxLength(25), regExpCheck]],
     confirm: ['', [Validators.required, Validators.maxLength(25)]],
     phone: this.fb.group({
-      prefix: ['', Validators.required],
+      prefix: ['FR+33', Validators.required],
       number: ['', [Validators.required, Validators.pattern('[0-9]+')]]
     }),
     age: ['', [Validators.required, Validators.min(18), Validators.max(119)]],
@@ -37,7 +37,7 @@ export class ProfilePageComponent implements OnInit {
               private emailValidator: EmailCheckValidator,
               private imageService: ImagesService,
               private authService: AuthService,
-              private usersService: UsersService) { }
+              private usersService: UsersService){ }
 
   ngOnInit(): void {
     this.usersService.getUser().subscribe(user => {
